@@ -1,39 +1,42 @@
 function solution(n, wires) {
-    let answer = 9999;
-    const graph = {};
+    const answer = [];
     
-    wires.map(wire => {
-        const [start, end] = wire;
-        if(!graph[start]) graph[start] = [];
-        if(!graph[end]) graph[end] = [];
+    // 그래프 생성
+    const connectionMap = wires.reduce((map, connection) => {
+        const [from, to] = connection;
         
-        graph[start].push(end);
-        graph[end].push(start);
-    });
+        if(!map[from]) map[from] = [];
+        if(!map[to]) map[to] = [];
+        
+        map[from].push(to);
+        map[to].push(from);
+        
+        return map;
+    }, {});
     
-    const dfs = (start, except) => {
-        let count = 0;
-        const schedule = [start];
-        const visited = [start];
+    // BFS 탐색 구현
+    const BFS = (graph, except) => {
+        let queue = [1];
+        const visited = [];
         
-        while(schedule.length) {
-            const node = schedule.pop();
-            graph[node].forEach((element) => {
-                if(element !== except && !visited.includes(element)) {
-                    visited.push(element);
-                    schedule.push(element);
-                }
-            });
-            count++;
+        while(queue.length) {
+            const curTower = queue.shift();
+            
+            if(!visited.includes(curTower) && curTower !== except) {
+                visited.push(curTower);
+                queue = [...queue, ...graph[curTower]];
+            }
         }
         
-        return count;
+        return visited.length;
+    };
+    
+    // 각 송전탑을 돌며 개수 차이 확인
+    for(let i = 1; i < n + 1; i++) {
+        const differ = Math.abs(n - (2 * BFS(connectionMap, i)));
+        
+        answer.push(differ);
     }
     
-    wires.forEach(element => {
-        const [start, end] = element;
-        answer = Math.min(answer, Math.abs(dfs(start, end) - dfs(end, start)));
-    });
-    
-    return answer;
+    return Math.min(...answer);
 }
