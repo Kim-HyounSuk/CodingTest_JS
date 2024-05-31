@@ -7,8 +7,8 @@ function solution(fees, records) {
     
     records.forEach((record) => {
         const [time, carNumber, state] = record.split(' ');
-        const minutes = time.split(':').reduce((arr, ele, idx) => {
-            return idx === 0 ? Number(ele) * 60 : arr + Number(ele);
+        const minutes = time.split(':').reduce((acc, ele, idx) => {
+            return idx === 0 ? Number(ele) * 60 : acc + Number(ele);
         }, 0);
         
         if(state === 'IN') {
