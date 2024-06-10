@@ -1,40 +1,44 @@
+const fileSort = (files) => {
+    const arr = [];
+    
+    files.forEach((file) => {
+        let head = '', number='', tail = '';
+        
+        for(let i = 0; i < file.length; i++) {
+            if(file[i] === ' ') {
+                if(!number) {
+                    head += file[i];
+                    continue;
+                }
+                else if(number) {
+                    tail += file[i];
+                    continue
+                }
+            } else if(!number && isNaN(file[i])) {
+                head += file[i];
+            } else if(!tail && !isNaN(file[i])) {
+                number += file[i];
+            } else {
+                tail += file[i];
+            }
+        }
+        
+        arr.push([head, number, tail]);
+    });
+    
+    console.log(arr);
+    
+    arr.sort((a, b) => {
+        if(a[0].toLowerCase() > b[0].toLowerCase()) return 1;
+        else if(a[0].toLowerCase() < b[0].toLowerCase()) return -1;
+        else return a[1] - b[1];
+    });
+    
+    return arr.map((file) => file.join(''));
+};
+
 function solution(files) {
-  files.sort((a, b) => {
-    const first = tokenize(a);
-    const second = tokenize(b);
-    return fileSort(first, second);
-  });
-  return files;
-}
-
-function tokenize(file) {
-  let startNumIdx;
-  let endNumIdx;
-  for (let i = 0; i < file.length; i++) {
-    if (!startNumIdx && isNumber(file[i])) {
-      startNumIdx = i;
-    }
-    if (startNumIdx && !isNumber(file[i + 1])) {
-      endNumIdx = i;
-      break;
-    }
-  }
-  const head = file.slice(0, startNumIdx);
-  const num = file.slice(startNumIdx, endNumIdx + 1);
-  //비교해주기 위해 문자열은 소문자로 숫자string은 숫자로 만들어준다.
-  return [head.toLowerCase(), num * 1];
-}
-function isNumber(char) {
-  return !isNaN(parseInt(char));
-}
-
-
-function fileSort(first, second) {
-  let [firstHead, firstNum] = first;
-  let [secondHead, secondNum] = second;
-  if (firstHead < secondHead) {
-    return -1;
-  } else if (firstHead > secondHead) {
-    return 1;
-  } else return firstNum - secondNum;
+    const answer = fileSort(files);
+    
+    return answer;
 }
