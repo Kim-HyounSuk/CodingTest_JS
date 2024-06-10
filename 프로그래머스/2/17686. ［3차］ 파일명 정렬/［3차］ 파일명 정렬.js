@@ -8,11 +8,9 @@ const fileSort = (files) => {
             if(file[i] === ' ') {
                 if(!number) {
                     head += file[i];
-                    continue;
                 }
                 else if(number) {
                     tail += file[i];
-                    continue
                 }
             } else if(!number && isNaN(file[i])) {
                 head += file[i];
