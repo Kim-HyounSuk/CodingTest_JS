@@ -25,6 +25,7 @@ const fileSort = (files) => {
     });
     
     arr.sort((a, b) => {
+        a > b
         if(a[0].toLowerCase() > b[0].toLowerCase()) return 1;
         else if(a[0].toLowerCase() < b[0].toLowerCase()) return -1;
         else return a[1] - b[1];
