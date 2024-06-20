@@ -18,8 +18,6 @@ function solution(book_time) {
         }
     });
     
-    console.log(arr);
-    
     arr.forEach(([inTime, outTime]) => {
         rooms = rooms.filter((ele) => ele > inTime);
         
