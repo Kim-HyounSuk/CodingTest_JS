@@ -6,18 +6,18 @@ function solution(numbers, hand) {
         1: [0, 0],
         4: [1, 0],
         7: [2, 0],
-    };  
+    };
     const useRight = {
         3: [0, 2],
         6: [1, 2],
         9: [2, 2],
-    } 
+    };
     const useBoth = {
         2: [0, 1],
         5: [1, 1],
         8: [2, 1],
         0: [3, 1],
-    }
+    };
     
     numbers.forEach((number) => {
         if(useLeft[number]) {
