@@ -4,7 +4,6 @@ function solution(n) {
     
     while(n > 0) {
         answer = type[n%3] + answer;
-        
         n = parseInt((n - 1) / 3);
     }
     
